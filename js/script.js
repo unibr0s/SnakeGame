@@ -10,6 +10,7 @@ let direction = { x: 1, y: 0 };
 let food = { x: 15, y: 10 };
 let score = 0;
 let gameOver = false;
+let nextDirection = { x: 1, y: 0 };  // Initialize with the current direction
 
 // Load images
 const snakeHeadImg = new Image();
@@ -49,46 +50,65 @@ function drawBackground() {
 function drawSnake() {
     for (let i = 0; i < snake.length; i++) {
         let segment = snake[i];
-        let imageToDraw;
+        let imageToDraw = snakeBodyImg;  // Default to body image
         let angle = getAngle(segment.dir);
 
         if (i === 0) {
-            // Head
+            // Head is always the first segment
             imageToDraw = snakeHeadImg;
         } else if (i === snake.length - 1) {
-            // Tail
+            // Tail is always the last segment
             imageToDraw = snakeTailImg;
             const prevSegment = snake[i - 1];
+            // Calculate tail angle based on previous segment
             const dx = prevSegment.x - segment.x;
             const dy = prevSegment.y - segment.y;
             if (Math.abs(dx) > 1) angle = dx > 0 ? Math.PI : 0;
             else if (Math.abs(dy) > 1) angle = dy > 0 ? Math.PI/2 : -Math.PI/2;
             else angle = getAngle({ x: dx, y: dy });
-        } else {
-            // Body segments
-            imageToDraw = snakeBodyImg;  // Default to body image
+        } else if (i > 0 && i < snake.length - 1) {
+            // Only check for corners on body segments
+            const prevSegment = snake[i - 1];
+            const nextSegment = snake[i + 1];
             
-            // Get previous segment's direction
-            if (i > 0) {
-                const prevSegment = snake[i - 1];
-                const dx = prevSegment.x - segment.x;
-                const dy = prevSegment.y - segment.y;
+            // Simple direction change check
+            const dx1 = prevSegment.x - segment.x;
+            const dy1 = prevSegment.y - segment.y;
+            const dx2 = nextSegment.x - segment.x;
+            const dy2 = nextSegment.y - segment.y;
+
+            // Only use corner pieces when there's a clear turn
+            if (dx1 !== dx2 && dy1 !== dy2) {
+                const isClockwise = (dx1 === 1 && dy2 === 1) || 
+                                  (dy1 === 1 && dx2 === -1) || 
+                                  (dx1 === -1 && dy2 === -1) || 
+                                  (dy1 === -1 && dx2 === 1);
                 
-                // Calculate angle based on actual position difference
-                if (Math.abs(dx) > 1) angle = dx > 0 ? Math.PI : 0;
-                else if (Math.abs(dy) > 1) angle = dy > 0 ? Math.PI/2 : -Math.PI/2;
-                else angle = getAngle({ x: dx, y: dy });
+                imageToDraw = isClockwise ? snakeCornerRightImg : snakeCornerLeftImg;
+                // Adjust angle based on turn direction
+                if (isClockwise) {
+                    angle = getAngle({ x: dx1, y: dy1 });
+                } else {
+                    // For counter-clockwise turns, calculate angle based on the turn direction
+                    if (dx1 === 1 && dy2 === -1) angle = Math.PI/2;     // From right, turning up
+                    else if (dx1 === -1 && dy2 === 1) angle = -Math.PI/2; // From left, turning down
+                    else if (dy1 === 1 && dx2 === 1) angle = Math.PI;    // From down, turning right
+                    else if (dy1 === -1 && dx2 === -1) angle = 0;       // From up, turning left
+                }
             }
         }
 
-        ctx.save();
-        ctx.translate(
-            segment.x * gridSize + gridSize / 2,
-            segment.y * gridSize + gridSize / 2
-        );
-        ctx.rotate(angle);
-        ctx.drawImage(imageToDraw, -gridSize / 2, -gridSize / 2, gridSize, gridSize);
-        ctx.restore();
+        // Draw the segment if image is loaded
+        if (imageToDraw.complete && imageToDraw.naturalHeight !== 0) {
+            ctx.save();
+            ctx.translate(
+                segment.x * gridSize + gridSize / 2,
+                segment.y * gridSize + gridSize / 2
+            );
+            ctx.rotate(angle);
+            ctx.drawImage(imageToDraw, -gridSize / 2, -gridSize / 2, gridSize, gridSize);
+            ctx.restore();
+        }
     }
 }
 
@@ -111,6 +131,10 @@ function drawFood() {
 }
 
 function updatePosition() {
+    if (nextDirection.x !== -direction.x || nextDirection.y !== -direction.y) {
+        direction = nextDirection;
+    }
+
     const newHead = {
         x: snake[0].x + direction.x,
         y: snake[0].y + direction.y,
@@ -133,6 +157,9 @@ function updatePosition() {
     } else {
         snake.pop();
     }
+
+    // Debugging: Log the snake's state
+    console.log('Snake:', snake.map(s => ({ x: s.x, y: s.y, dir: s.dir })));
 }
 
 function placeFood() {
@@ -140,6 +167,12 @@ function placeFood() {
     const maxCellsY = canvas.height / gridSize;
     food.x = Math.floor(Math.random() * maxCellsX);
     food.y = Math.floor(Math.random() * maxCellsY);
+
+    // Ensure food doesn't spawn on the snake
+    while (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+        food.x = Math.floor(Math.random() * maxCellsX);
+        food.y = Math.floor(Math.random() * maxCellsY);
+    }
 }
 
 function checkCollision() {
@@ -156,6 +189,7 @@ function checkCollision() {
 function resetGame() {
     snake = [{ x: 10, y: 10, dir: { x: 1, y: 0 } }];
     direction = { x: 1, y: 0 };
+    nextDirection = { x: 1, y: 0 };
     score = 0;
     food = { x: 15, y: 10 };
     gameOver = false;
@@ -163,37 +197,42 @@ function resetGame() {
 
 // Event listeners
 document.addEventListener('keydown', (e) => {
+    let proposedDirection = null;
+    
     switch (e.key) {
         case 'ArrowLeft':
         case 'a':
         case 'A':
-            if (snake[0].dir.x !== 1) {
-                direction = { x: -1, y: 0 };
+            if (direction.x !== 1) {
+                proposedDirection = { x: -1, y: 0 };
             }
             break;
         case 'ArrowUp':
         case 'w':
         case 'W':
-            if (snake[0].dir.x !== 0 || snake[0].dir.y !== 1) {
-                direction = { x: 0, y: -1 };
+            if (direction.y !== 1) {
+                proposedDirection = { x: 0, y: -1 };
             }
             break;
         case 'ArrowRight':
         case 'd':
         case 'D':
-            if (snake[0].dir.x !== -1) {
-                direction = { x: 1, y: 0 };
+            if (direction.x !== -1) {
+                proposedDirection = { x: 1, y: 0 };
             }
             break;
         case 'ArrowDown':
         case 's':
         case 'S':
-            if (snake[0].dir.x !== 0 || snake[0].dir.y !== -1) {
-                direction = { x: 0, y: 1 };
+            if (direction.y !== -1) {
+                proposedDirection = { x: 0, y: 1 };
             }
             break;
     }
+
+    if (proposedDirection) {
+        nextDirection = proposedDirection;
+    }
 });
 
-// Start game loop
 setInterval(drawGame, 150);
