@@ -5,12 +5,18 @@ const scoreDisplay = document.getElementById('score');
 const gridSize = 40;
 
 // Game state
-let snake = [{ x: 10, y: 10, dir: { x: 1, y: 0 } }];
+let snake = [
+    { x: 10, y: 10, dir: { x: 1, y: 0 } },  // Head
+    { x: 9, y: 10, dir: { x: 1, y: 0 } }    // Tail
+];
 let direction = { x: 1, y: 0 };
 let food = { x: 15, y: 10 };
 let score = 0;
 let gameOver = false;
 let nextDirection = { x: 1, y: 0 };  // Initialize with the current direction
+let foodFrame = 0;
+const FOOD_FRAMES = 10; // Number of frames/images you have
+const foodImages = [];
 
 // Load images
 const snakeHeadImg = new Image();
@@ -22,14 +28,34 @@ snakeBodyImg.src = 'assets/snake_body.png';
 const snakeTailImg = new Image();
 snakeTailImg.src = 'assets/snake_tail.png';
 
-const foodImg = new Image();
-foodImg.src = 'assets/food.png';
-
 const snakeCornerRightImg = new Image();
 snakeCornerRightImg.src = 'assets/snake_corner_right.png';
 
 const snakeCornerLeftImg = new Image();
 snakeCornerLeftImg.src = 'assets/snake_corner_left.png';
+
+// Load all food images
+for (let i = 0; i < FOOD_FRAMES; i++) {
+    const img = new Image();
+    img.src = `assets/food_${i}.png`; // Name your files food_0.png, food_1.png, etc.
+    foodImages.push(img);
+}
+
+// Update these audio declarations to match your file names
+const backgroundMusic = new Audio('assets/background_music.mp3');
+const eatSound = new Audio('assets/eat_food.mp3');
+const gameOverSound = new Audio('assets/you_lose.mp3');
+
+// Set up audio with fixed volumes
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.15;  // Adjust this value (0.0 to 1.0)
+eatSound.volume = 0.25;         // Adjust this value (0.0 to 1.0)
+gameOverSound.volume = 0.25;    // Adjust this value (0.0 to 1.0)
+
+// Start background music when game starts
+function startGame() {
+    backgroundMusic.play();
+}
 
 // Game functions
 function drawGame() {
@@ -43,7 +69,7 @@ function drawGame() {
 }
 
 function drawBackground() {
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#fff';  // Changed back to white
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -122,12 +148,15 @@ function getAngle(direction) {
 
 function drawFood() {
     ctx.drawImage(
-        foodImg,
+        foodImages[Math.floor(foodFrame)],
         food.x * gridSize,
         food.y * gridSize,
         gridSize,
         gridSize
     );
+    
+    // Update frame for ~100 FPS
+    foodFrame = (foodFrame + 4.5) % FOOD_FRAMES; // Much faster animation
 }
 
 function updatePosition() {
@@ -153,6 +182,9 @@ function updatePosition() {
 
     if (newHead.x === food.x && newHead.y === food.y) {
         score++;
+        console.log('Playing eat sound...'); // Debug log
+        eatSound.currentTime = 0; // Reset sound to start
+        eatSound.play().catch(e => console.error('Error playing eat sound:', e));
         placeFood();
     } else {
         snake.pop();
@@ -179,6 +211,9 @@ function checkCollision() {
     for (let i = 1; i < snake.length; i++) {
         if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
             gameOver = true;
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+            gameOverSound.play();
             alert(`Game Over! Your score is ${score}`);
             resetGame();
             break;
@@ -187,12 +222,16 @@ function checkCollision() {
 }
 
 function resetGame() {
-    snake = [{ x: 10, y: 10, dir: { x: 1, y: 0 } }];
+    snake = [
+        { x: 10, y: 10, dir: { x: 1, y: 0 } },  // Head
+        { x: 9, y: 10, dir: { x: 1, y: 0 } }    // Tail
+    ];
     direction = { x: 1, y: 0 };
     nextDirection = { x: 1, y: 0 };
     score = 0;
     food = { x: 15, y: 10 };
     gameOver = false;
+    backgroundMusic.play();
 }
 
 // Event listeners
@@ -236,3 +275,19 @@ document.addEventListener('keydown', (e) => {
 });
 
 setInterval(drawGame, 150);
+
+// Add this at the end to start the music when the page loads
+window.addEventListener('load', startGame);
+
+// Add single mute variable
+let isSoundMuted = false;
+
+// Single toggle button listener
+document.getElementById('toggleSound').addEventListener('click', () => {
+    isSoundMuted = !isSoundMuted;
+    backgroundMusic.muted = isSoundMuted;
+    eatSound.muted = isSoundMuted;
+    gameOverSound.muted = isSoundMuted;
+    document.getElementById('toggleSound').textContent = isSoundMuted ? '🔇' : '🔊';
+    document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
+});
