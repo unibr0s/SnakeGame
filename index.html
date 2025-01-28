@@ -2,10 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Snake Game with Head/Body/Tail Artwork</title>
+    <meta name="description" content="A modern Snake game with pixel art graphics and custom sound effects. Eat, grow, and chase high scores in this classic arcade experience!">
+    <meta name="author" content="Unibros">
+    <meta name="keywords" content="Snake Game, Retro Gaming, Arcade Game, Browser Game, Pixel Art, Classic Snake, HTML5 Game, JavaScript Game, Unibros Game">
+    <title>Snake Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
+    <h1 class="game-title">SNAKE GAME</h1>
     <div id="score">Score: 0</div>
     <canvas id="gameCanvas" width="640" height="640"></canvas>
     <div id="controls">Use Arrow Keys or W/A/S/D to move</div>
@@ -15,6 +20,12 @@
             <button id="toggleSound">🔊</button>
         </div>
     </div>
+    <footer>
+        Built by <a href="https://unibros.xyz" target="_blank">Unibros</a>
+        <a href="https://x.com/unibr0s" target="_blank" class="x-icon">
+            <img src="assets/icons/x.svg" alt="X (Twitter)" />
+        </a>
+    </footer>
     <script src="js/script.js"></script>
   </body>
 </html>
