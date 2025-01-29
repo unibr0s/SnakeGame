@@ -54,7 +54,20 @@ gameOverSound.volume = 0.25;    // Adjust this value (0.0 to 1.0)
 
 // Start background music when game starts
 function startGame() {
-    backgroundMusic.play();
+    // Try to play music but handle the promise rejection
+    backgroundMusic.play().catch(error => {
+        console.log('Autoplay prevented. Press any movement key to start music.');
+        // Add keydown handler to start music on first key press
+        function startMusicOnKey(e) {
+            if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 
+                 'a', 'A', 'w', 'W', 's', 'S', 'd', 'D'].includes(e.key)) {
+                backgroundMusic.play();
+                // Remove the key handler after first use
+                document.removeEventListener('keydown', startMusicOnKey);
+            }
+        }
+        document.addEventListener('keydown', startMusicOnKey);
+    });
 }
 
 // Game functions
@@ -231,7 +244,11 @@ function resetGame() {
     score = 0;
     food = { x: 15, y: 10 };
     gameOver = false;
-    backgroundMusic.play();
+    
+    // Try to play music but don't force it if browser blocks it
+    backgroundMusic.play().catch(error => {
+        console.log('Music playback prevented by browser.');
+    });
 }
 
 // Event listeners
