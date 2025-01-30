@@ -137,3 +137,176 @@ footer a:hover {
     margin: 0 0 0.3rem 0;  /* Reduced margins */
     letter-spacing: 2px;
 }
+
+/* Mobile touch controls - hidden by default */
+.mobile-controls {
+    display: none;
+    position: relative;
+    z-index: 2;
+}
+
+.touch-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.middle-row {
+    display: flex;
+    gap: 50px;
+}
+
+.touch-button {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #ff0000;
+    border-radius: 50%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6),
+                0 0 40px rgba(255, 0, 0, 0.4),
+                0 0 60px rgba(255, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+    transition: all 0.1s ease;  /* Changed from just transform to all */
+    touch-action: manipulation;  /* Optimize for touch */
+}
+
+.touch-button:active,
+.touch-button:focus {
+    background: #1a0000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8),
+                0 0 50px rgba(255, 0, 0, 0.4);
+    transform: scale(0.9);
+    outline: none;  /* Remove focus outline */
+}
+
+/* Add specific touch device handling */
+@media (hover: none) and (pointer: coarse) {
+    .touch-button.pressed {
+        transform: scale(0.9);
+        background: #1a0000;
+    }
+}
+
+.arrow-icon {
+    width: 40px;  /* Adjust size as needed */
+    height: 40px;  /* Adjust size as needed */
+}
+
+/* Only show mobile controls on touch devices/small screens */
+@media (max-width: 768px), (pointer: coarse) {
+    /* Show mobile controls */
+    .mobile-controls {
+        display: block;
+    }
+    
+    /* Hide keyboard instructions */
+    #controls {
+        display: none;
+    }
+
+    /* Adjust canvas size */
+    #gameCanvas {
+        width: 90vw;  /* Make canvas wider on mobile */
+        height: 90vw;  /* Keep it square */
+    }
+
+    /* Adjust title positioning and size */
+    .game-title {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #000;
+        margin: 0;  /* Remove margins */
+        padding: 1.5rem 0;  /* Add padding inside */
+        font-size: 2.8rem;  /* Much larger title */
+        text-align: center;
+        z-index: 3;  /* Ensure it stays on top */
+    }
+
+    /* Adjust spacing below fixed title */
+    #score {
+        margin-top: 7rem;  /* More space below title */
+        margin-bottom: 2rem;  /* More space above canvas */
+        font-size: 2rem;  /* Much larger score text */
+        letter-spacing: 2px;  /* Add some letter spacing */
+    }
+
+    /* Adjust sound controls for mobile */
+    .sound-controls {
+        margin: 2rem 0;  /* Increased margin */
+        scale: 1.5;  /* Made control section even bigger */
+    }
+
+    .sound-controls div {
+        gap: 1.5rem;  /* More space between label and button */
+    }
+
+    .sound-controls label {
+        font-size: 1.4rem;  /* Larger label text */
+    }
+
+    /* Adjust touch controls spacing */
+    .touch-controls {
+        margin-top: 3rem;  /* Increased space below canvas */
+        gap: 40px;
+    }
+
+    .middle-row {
+        gap: 200px;  /* Much more space between left/right buttons */
+    }
+
+    .touch-button {
+        width: 130px;  /* Much larger buttons */
+        height: 130px;
+    }
+
+    .arrow-icon {
+        width: 80px;  /* Larger arrow icons */
+        height: 80px;
+    }
+
+    /* Make footer bigger and more spaced */
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #000;
+        padding: 1.8rem 0;  /* Increased padding */
+        margin-top: 0;
+        font-size: 1.4rem;  /* Much larger text */
+        gap: 16px;  /* More space between items */
+    }
+
+    .x-icon img {
+        width: 28px;  /* Larger X icon */
+        height: 28px;
+    }
+
+    /* Increase the size of the Unibros link too */
+    footer a {
+        font-size: 1.4rem;  /* Match footer text size */
+    }
+
+    /* Adjust body padding for mobile */
+    body {
+        padding: 1.5rem 0 0 0;  /* Remove bottom padding */
+        position: relative;
+        min-height: 100vh;
+    }
+
+    /* Add padding to mobile controls to prevent overlap with footer */
+    .mobile-controls {
+        margin-bottom: 6rem;  /* Increased space for footer */
+    }
+}

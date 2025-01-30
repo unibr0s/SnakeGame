@@ -321,3 +321,38 @@ document.getElementById('toggleSound').addEventListener('click', () => {
     volumeIcon.src = isSoundMuted ? 'assets/icons/volume-off.png' : 'assets/icons/volume-on.png';
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
 });
+
+// Add this to your existing JavaScript
+function setupMobileControls() {
+    // Touch controls
+    document.getElementById('upButton').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (direction.y !== 1) {
+            nextDirection = { x: 0, y: -1 };
+        }
+    });
+
+    document.getElementById('downButton').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (direction.y !== -1) {
+            nextDirection = { x: 0, y: 1 };
+        }
+    });
+
+    document.getElementById('leftButton').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (direction.x !== 1) {
+            nextDirection = { x: -1, y: 0 };
+        }
+    });
+
+    document.getElementById('rightButton').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (direction.x !== -1) {
+            nextDirection = { x: 1, y: 0 };
+        }
+    });
+}
+
+// Call this when the page loads
+setupMobileControls();
