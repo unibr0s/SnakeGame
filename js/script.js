@@ -315,6 +315,9 @@ document.getElementById('toggleSound').addEventListener('click', () => {
     backgroundMusic.muted = isSoundMuted;
     eatSound.muted = isSoundMuted;
     gameOverSound.muted = isSoundMuted;
-    document.getElementById('toggleSound').textContent = isSoundMuted ? '🔇' : '🔊';
+    
+    // Update icon based on mute state
+    const volumeIcon = document.querySelector('.volume-icon');
+    volumeIcon.src = isSoundMuted ? 'assets/icons/volume-off.png' : 'assets/icons/volume-on.png';
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
 });

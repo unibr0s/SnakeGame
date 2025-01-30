@@ -59,18 +59,34 @@ body {
     height: 30px;
     border: none;
     border-radius: 5px;
-    background: #333;  /* Darker background for buttons */
+    background: transparent;  /* Changed to transparent */
     cursor: pointer;
-    font-size: 1.2rem;
-    color: #fff;  /* White text for buttons */
+    padding: 0;  /* Remove padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sound-controls button:hover {
-    background: #444;  /* Slightly lighter on hover */
+    background: transparent;
 }
 
 .sound-controls button.muted {
-    background: #222;  /* Darker when muted */
+    background: transparent;
+}
+
+.volume-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;  /* Add smooth transition */
+}
+
+.sound-controls button:hover .volume-icon {
+    transform: scale(1.2);  /* Grow on hover */
+}
+
+.sound-controls button:active .volume-icon {
+    transform: scale(0.9);  /* Shrink when clicked */
 }
 
 footer {
