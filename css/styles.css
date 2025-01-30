@@ -219,26 +219,49 @@ footer a:hover {
         height: 90vw;  /* Keep it square */
     }
 
-    /* Adjust title positioning and size */
+    /* Adjust title and header content */
     .game-title {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         background: #000;
-        margin: 0;  /* Remove margins */
-        padding: 1.5rem 0;  /* Add padding inside */
-        font-size: 2.8rem;  /* Much larger title */
+        margin: 0;
+        padding: 1.5rem 0 0.5rem 0;  /* Reduced bottom padding */
+        font-size: 2.8rem;
         text-align: center;
-        z-index: 3;  /* Ensure it stays on top */
+        z-index: 3;
     }
 
-    /* Adjust spacing below fixed title */
+    /* Add subtitle section below title */
+    .header-content {
+        position: fixed;
+        top: 5.5rem;  /* Position below title */
+        left: 0;
+        width: 100%;
+        background: #000;
+        padding: 0.5rem 0;
+        text-align: center;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.2rem;
+    }
+
+    /* Move score below header content */
     #score {
-        margin-top: 7rem;  /* More space below title */
-        margin-bottom: 2rem;  /* More space above canvas */
-        font-size: 2rem;  /* Much larger score text */
-        letter-spacing: 2px;  /* Add some letter spacing */
+        margin-top: 9rem;  /* Increased to account for header content */
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+
+    /* Adjust canvas position */
+    #gameCanvas {
+        margin-top: 1rem;
     }
 
     /* Adjust sound controls for mobile */
@@ -309,4 +332,65 @@ footer a:hover {
     .mobile-controls {
         margin-bottom: 6rem;  /* Increased space for footer */
     }
+}
+
+/* Hide mobile header by default */
+.mobile-header-content {
+    display: none;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+    /* Show mobile header content */
+    .mobile-header-content {
+        position: fixed;
+        top: 5.5rem;
+        left: 0;
+        width: 100%;
+        background: #000;
+        padding: 0.5rem 0;
+        text-align: center;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.2rem;
+        color: #fff;  /* Match footer text color */
+    }
+
+    .mobile-header-content a {
+        color: #ff0000;  /* Red color like footer */
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .mobile-header-content a:hover {
+        color: #cc0000;  /* Darker red on hover like footer */
+    }
+
+    .mobile-header-content .x-icon {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .mobile-header-content .x-icon img {
+        width: 28px;  /* Match mobile footer icon size */
+        height: 28px;
+        transition: transform 0.2s ease;
+    }
+
+    .mobile-header-content .x-icon:hover img {
+        transform: scale(1.2);
+    }
+
+    .mobile-header-content .x-icon:active img {
+        transform: scale(0.9);
+    }
+
+    /* Hide regular footer on mobile */
+    footer {
+        display: none;
+    }
+
+    /* Rest of your mobile styles... */
 }
