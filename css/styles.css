@@ -219,7 +219,7 @@ footer a:hover {
         height: 90vw;  /* Keep it square */
     }
 
-    /* Adjust title and header content */
+    /* Adjust title */
     .game-title {
         position: fixed;
         top: 0;
@@ -227,41 +227,41 @@ footer a:hover {
         width: 100%;
         background: #000;
         margin: 0;
-        padding: 1.5rem 0 0.5rem 0;  /* Reduced bottom padding */
+        padding: 1.5rem 0 0.5rem 0;
         font-size: 2.8rem;
         text-align: center;
         z-index: 3;
     }
 
-    /* Add subtitle section below title */
-    .header-content {
+    /* Position mobile header content */
+    .mobile-header-content {
         position: fixed;
-        top: 5.5rem;  /* Position below title */
+        top: 5.5rem;
         left: 0;
         width: 100%;
         background: #000;
         padding: 0.5rem 0;
-        text-align: center;
         z-index: 3;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        font-size: 1.2rem;
     }
 
-    /* Move score below header content */
+    /* Move score below mobile header content */
     #score {
-        margin-top: 9rem;  /* Increased to account for header content */
-        margin-bottom: 1.5rem;
+        position: fixed;
+        top: 8rem;  /* Adjusted to be below mobile header */
+        left: 0;
+        width: 100%;
+        background: #000;
+        padding: 0.5rem 0;
+        margin: 0;
         font-size: 2rem;
         letter-spacing: 2px;
         text-align: center;
+        z-index: 3;
     }
 
-    /* Adjust canvas position */
+    /* Adjust canvas position to be below score */
     #gameCanvas {
-        margin-top: 1rem;
+        margin-top: 11rem;  /* Increased to account for fixed header elements */
     }
 
     /* Adjust sound controls for mobile */
