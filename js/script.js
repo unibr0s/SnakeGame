@@ -41,9 +41,18 @@ for (let i = 0; i < FOOD_FRAMES; i++) {
     foodImages.push(img);
 }
 
-// Add this with your other image loading at the top
+// At the top with other canvas setup
+ctx.imageSmoothingEnabled = false;  // Disable smoothing for pixel art
+canvas.style.backgroundColor = 'transparent';  // Set canvas background transparent
+
+// Preload background image
 const backgroundImg = new Image();
 backgroundImg.src = 'assets/game_background.png';
+
+// Force immediate loading of background
+document.body.onload = function() {
+    drawBackground();
+};
 
 // Update these audio declarations to match your file names
 const backgroundMusic = new Audio('assets/background_music.mp3');
@@ -90,9 +99,12 @@ function drawBackground() {
     if (backgroundImg.complete && backgroundImg.naturalHeight !== 0) {
         ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
     } else {
-        // Fallback to white background if image isn't loaded
-        ctx.fillStyle = '#fff';  // White background as fallback
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Clear the canvas (transparent) instead of white background
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Try to load the background again
+        backgroundImg.onload = function() {
+            ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+        };
     }
 }
 
@@ -356,3 +368,6 @@ function setupMobileControls() {
 
 // Call this when the page loads
 setupMobileControls();
+
+// Add this line after all your image loading code
+drawBackground();  // Initial draw of background
