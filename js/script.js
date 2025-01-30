@@ -41,6 +41,10 @@ for (let i = 0; i < FOOD_FRAMES; i++) {
     foodImages.push(img);
 }
 
+// Add this with your other image loading at the top
+const backgroundImg = new Image();
+backgroundImg.src = 'assets/game_background.png';
+
 // Update these audio declarations to match your file names
 const backgroundMusic = new Audio('assets/background_music.mp3');
 const eatSound = new Audio('assets/eat_food.mp3');
@@ -82,8 +86,14 @@ function drawGame() {
 }
 
 function drawBackground() {
-    ctx.fillStyle = '#fff';  // Changed back to white
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Draw the background image if it's loaded
+    if (backgroundImg.complete && backgroundImg.naturalHeight !== 0) {
+        ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+    } else {
+        // Fallback to white background if image isn't loaded
+        ctx.fillStyle = '#fff';  // White background as fallback
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
 function drawSnake() {
