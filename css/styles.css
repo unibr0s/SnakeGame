@@ -237,7 +237,7 @@ footer a:hover {
 
     .game-title {
         position: fixed;
-        top: 0;
+        top: 1rem;  /* Added spacing from top */
         left: 0;
         width: 100%;
         background: #000;
@@ -250,18 +250,29 @@ footer a:hover {
     .mobile-header-content {
         display: flex;
         position: fixed;
-        top: 3.5rem;
+        top: 4.5rem;  /* Adjusted for title spacing */
         width: 100%;
         justify-content: center;
         align-items: center;
         gap: 12px;
-        font-size: 1rem;
+        font-size: 1.2rem;  /* Slightly larger */
         z-index: 3;
+    }
+
+    /* Style for Unibros link in mobile header */
+    .mobile-header-content a {
+        color: #ff0000;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .mobile-header-content a:hover {
+        color: #cc0000;
     }
 
     #score {
         position: fixed;
-        top: 5rem;
+        top: 6.5rem;  /* Adjusted for new spacing */
         width: 100%;
         text-align: center;
         font-size: 1.5rem;
@@ -270,15 +281,16 @@ footer a:hover {
 
     #gameCanvas {
         position: fixed;
-        top: 7rem;
-        width: 90vw;
-        height: 90vw;
+        top: 8.5rem;  /* Adjusted for new spacing */
+        width: 85vw;  /* Slightly smaller to make room for controls */
+        height: 85vw;
     }
 
+    /* Larger touch controls */
     .mobile-controls {
         display: block;
         position: fixed;
-        bottom: 1rem;
+        bottom: 1.5rem;
         left: 0;
         width: 100%;
     }
@@ -287,29 +299,30 @@ footer a:hover {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 20px;  /* More space between buttons */
     }
 
     .middle-row {
         display: flex;
-        gap: 100px;
+        gap: 120px;  /* More space between left/right */
     }
 
     .touch-button {
-        width: 80px;
-        height: 80px;
+        width: 100px;  /* Larger buttons */
+        height: 100px;
     }
 
     .arrow-icon {
-        width: 45px;
-        height: 45px;
+        width: 55px;  /* Larger icons */
+        height: 55px;
     }
 
     .sound-controls {
         position: fixed;
-        bottom: 1rem;
-        right: 1rem;
+        bottom: 2rem;
+        right: 1.5rem;
         z-index: 4;
+        scale: 1.2;  /* Slightly larger */
     }
 
     /* Hide desktop elements */
