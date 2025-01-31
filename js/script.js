@@ -91,16 +91,16 @@ function drawGame() {
 }
 
 function drawBackground() {
-    // Draw the background image if it's loaded
+    console.log('Drawing background...');
+    console.log('Background image complete:', backgroundImg.complete);
+    console.log('Background image natural size:', backgroundImg.naturalWidth, 'x', backgroundImg.naturalHeight);
+    
     if (backgroundImg.complete && backgroundImg.naturalHeight !== 0) {
         ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+        console.log('Background drawn');
     } else {
-        // Clear the canvas (transparent) instead of white background
+        console.log('Background image not ready');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Try to load the background again
-        backgroundImg.onload = function() {
-            ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
-        };
     }
 }
 
@@ -367,3 +367,13 @@ setupMobileControls();
 
 // Add this line after all your image loading code
 drawBackground();  // Initial draw of background
+
+// Add this near your image loading code
+backgroundImg.onload = function() {
+    console.log('Background image loaded successfully');
+    drawBackground();  // Draw when loaded
+};
+
+backgroundImg.onerror = function() {
+    console.log('Failed to load background image:', backgroundImg.src);
+};
