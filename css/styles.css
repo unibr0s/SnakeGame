@@ -259,6 +259,19 @@ footer a:hover {
         color: #cc0000;
     }
 
+    /* Center container for game elements */
+    .mobile-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+    }
+
     #score {
         position: fixed;
         top: 7rem;
@@ -267,6 +280,7 @@ footer a:hover {
         font-size: 1.5rem;
         z-index: 3;
         background: #000;
+        left: 0;  /* Ensure full width centering */
     }
 
     #gameCanvas {
@@ -274,8 +288,10 @@ footer a:hover {
         top: 9rem;
         width: 85vw;
         height: 85vw;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     /* Mobile Controls */
