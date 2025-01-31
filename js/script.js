@@ -330,7 +330,7 @@ document.getElementById('toggleSound').addEventListener('click', () => {
     
     // Update icon based on mute state
     const volumeIcon = document.querySelector('.volume-icon');
-    volumeIcon.src = isSoundMuted ? 'assets/icons/volume-off.png' : 'assets/icons/volume-on.png';
+    volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
 });
 
@@ -371,3 +371,19 @@ setupMobileControls();
 
 // Add this line after all your image loading code
 drawBackground();  // Initial draw of background
+
+// Update the volume toggle functionality
+function toggleSound() {
+    const volumeIcon = document.querySelector('.volume-icon');
+    if (isSoundMuted) {
+        isSoundMuted = false;
+        volumeIcon.src = 'assets/Icons/volume-on.png';  // Updated path
+    } else {
+        isSoundMuted = true;
+        volumeIcon.src = 'assets/Icons/volume-off.png';  // Updated path
+    }
+}
+
+// Or if you're setting it up differently, update where the icons are defined
+const volumeOnIcon = 'assets/Icons/volume-on.png';
+const volumeOffIcon = 'assets/Icons/volume-off.png';
