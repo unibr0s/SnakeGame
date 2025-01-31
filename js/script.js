@@ -41,16 +41,6 @@ for (let i = 0; i < FOOD_FRAMES; i++) {
     foodImages.push(img);
 }
 
-// Preload volume icons
-const volumeOnIcon = new Image();
-volumeOnIcon.src = 'assets/Icons/volume-on.png';
-const volumeOffIcon = new Image();
-volumeOffIcon.src = 'assets/Icons/volume-off.png';
-
-// At the top with other canvas setup
-ctx.imageSmoothingEnabled = false;  // Disable smoothing for pixel art
-canvas.style.backgroundColor = 'transparent';  // Set canvas background transparent
-
 // Preload background image
 const backgroundImg = new Image();
 backgroundImg.src = 'assets/game_background.png';
@@ -330,18 +320,13 @@ let isSoundMuted = false;
 // Single toggle button listener
 document.getElementById('toggleSound').addEventListener('click', () => {
     isSoundMuted = !isSoundMuted;
-    
-    // Update all audio elements
     backgroundMusic.muted = isSoundMuted;
     eatSound.muted = isSoundMuted;
     gameOverSound.muted = isSoundMuted;
     
-    // Update icon based on mute state using preloaded images
+    // Update icon based on mute state
     const volumeIcon = document.querySelector('.volume-icon');
-    if (volumeIcon) {
-        volumeIcon.src = isSoundMuted ? volumeOffIcon.src : volumeOnIcon.src;
-    }
-    
+    volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
 });
 
@@ -382,19 +367,3 @@ setupMobileControls();
 
 // Add this line after all your image loading code
 drawBackground();  // Initial draw of background
-
-// Update the volume toggle functionality
-function toggleSound() {
-    const volumeIcon = document.querySelector('.volume-icon');
-    if (isSoundMuted) {
-        isSoundMuted = false;
-        volumeIcon.src = 'assets/Icons/volume-on.png';  // Updated path
-    } else {
-        isSoundMuted = true;
-        volumeIcon.src = 'assets/Icons/volume-off.png';  // Updated path
-    }
-}
-
-// Or if you're setting it up differently, update where the icons are defined
-const volumeOnIcon = 'assets/Icons/volume-on.png';
-const volumeOffIcon = 'assets/Icons/volume-off.png';
