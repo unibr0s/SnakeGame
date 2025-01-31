@@ -41,6 +41,12 @@ for (let i = 0; i < FOOD_FRAMES; i++) {
     foodImages.push(img);
 }
 
+// Preload volume icons
+const volumeOnIcon = new Image();
+volumeOnIcon.src = 'assets/Icons/volume-on.png';
+const volumeOffIcon = new Image();
+volumeOffIcon.src = 'assets/Icons/volume-off.png';
+
 // At the top with other canvas setup
 ctx.imageSmoothingEnabled = false;  // Disable smoothing for pixel art
 canvas.style.backgroundColor = 'transparent';  // Set canvas background transparent
@@ -330,14 +336,10 @@ document.getElementById('toggleSound').addEventListener('click', () => {
     eatSound.muted = isSoundMuted;
     gameOverSound.muted = isSoundMuted;
     
-    // Update icon based on mute state
+    // Update icon based on mute state using preloaded images
     const volumeIcon = document.querySelector('.volume-icon');
-    if (volumeIcon) {  // Check if element exists
-        try {
-            volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
-        } catch (error) {
-            console.error('Error updating volume icon:', error);
-        }
+    if (volumeIcon) {
+        volumeIcon.src = isSoundMuted ? volumeOffIcon.src : volumeOnIcon.src;
     }
     
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
