@@ -213,7 +213,7 @@ footer a:hover {
     display: none;
 }
 
-/* Single mobile media query */
+/* Keep only ONE mobile media query with all mobile styles */
 @media (max-width: 768px), (pointer: coarse) {
     body {
         margin: 0;
@@ -224,20 +224,9 @@ footer a:hover {
         overflow: hidden;
     }
 
-    .mobile-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
     .game-title {
         position: fixed;
-        top: 1rem;  /* Added spacing from top */
+        top: 1.5rem;  /* More space from top */
         left: 0;
         width: 100%;
         background: #000;
@@ -250,16 +239,16 @@ footer a:hover {
     .mobile-header-content {
         display: flex;
         position: fixed;
-        top: 4.5rem;  /* Adjusted for title spacing */
+        top: 5rem;
         width: 100%;
         justify-content: center;
         align-items: center;
         gap: 12px;
-        font-size: 1.2rem;  /* Slightly larger */
+        font-size: 1.2rem;
         z-index: 3;
+        background: #000;
     }
 
-    /* Style for Unibros link in mobile header */
     .mobile-header-content a {
         color: #ff0000;
         text-decoration: none;
@@ -272,25 +261,25 @@ footer a:hover {
 
     #score {
         position: fixed;
-        top: 6.5rem;  /* Adjusted for new spacing */
+        top: 7rem;
         width: 100%;
         text-align: center;
         font-size: 1.5rem;
         z-index: 3;
+        background: #000;
     }
 
     #gameCanvas {
         position: fixed;
-        top: 8.5rem;  /* Adjusted for new spacing */
-        width: 85vw;  /* Slightly smaller to make room for controls */
+        top: 9rem;
+        width: 85vw;
         height: 85vw;
     }
 
-    /* Larger touch controls */
     .mobile-controls {
         display: block;
         position: fixed;
-        bottom: 1.5rem;
+        bottom: 2rem;
         left: 0;
         width: 100%;
     }
@@ -299,30 +288,30 @@ footer a:hover {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;  /* More space between buttons */
+        gap: 25px;
     }
 
     .middle-row {
         display: flex;
-        gap: 120px;  /* More space between left/right */
+        gap: 130px;
     }
 
     .touch-button {
-        width: 100px;  /* Larger buttons */
-        height: 100px;
+        width: 110px;
+        height: 110px;
     }
 
     .arrow-icon {
-        width: 55px;  /* Larger icons */
-        height: 55px;
+        width: 65px;
+        height: 65px;
     }
 
     .sound-controls {
         position: fixed;
-        bottom: 2rem;
-        right: 1.5rem;
+        bottom: 2.5rem;
+        right: 2rem;
         z-index: 4;
-        scale: 1.2;  /* Slightly larger */
+        scale: 1.3;
     }
 
     /* Hide desktop elements */

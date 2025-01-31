@@ -79,6 +79,17 @@ function startGame() {
     });
 }
 
+// Add mobile-specific audio handling
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    document.addEventListener('touchstart', function startAudio() {
+        backgroundMusic.play().catch(function(error) {
+            console.log('Mobile audio play failed:', error);
+        });
+        // Remove the listener after first touch
+        document.removeEventListener('touchstart', startAudio);
+    }, { once: true });
+}
+
 // Game functions
 function drawGame() {
     if (gameOver) return;
@@ -335,6 +346,10 @@ function setupMobileControls() {
     // Touch controls
     document.getElementById('upButton').addEventListener('touchstart', (e) => {
         e.preventDefault();
+        // Try to play background music with error handling
+        backgroundMusic.play().catch(error => {
+            console.log('Mobile audio play failed on up button:', error);
+        });
         if (direction.y !== 1) {
             nextDirection = { x: 0, y: -1 };
         }
@@ -342,6 +357,10 @@ function setupMobileControls() {
 
     document.getElementById('downButton').addEventListener('touchstart', (e) => {
         e.preventDefault();
+        // Try to play background music with error handling
+        backgroundMusic.play().catch(error => {
+            console.log('Mobile audio play failed on down button:', error);
+        });
         if (direction.y !== -1) {
             nextDirection = { x: 0, y: 1 };
         }
@@ -349,6 +368,10 @@ function setupMobileControls() {
 
     document.getElementById('leftButton').addEventListener('touchstart', (e) => {
         e.preventDefault();
+        // Try to play background music with error handling
+        backgroundMusic.play().catch(error => {
+            console.log('Mobile audio play failed on left button:', error);
+        });
         if (direction.x !== 1) {
             nextDirection = { x: -1, y: 0 };
         }
@@ -356,10 +379,22 @@ function setupMobileControls() {
 
     document.getElementById('rightButton').addEventListener('touchstart', (e) => {
         e.preventDefault();
+        // Try to play background music with error handling
+        backgroundMusic.play().catch(error => {
+            console.log('Mobile audio play failed on right button:', error);
+        });
         if (direction.x !== -1) {
             nextDirection = { x: 1, y: 0 };
         }
     });
+
+    // Add a one-time touch handler for initial audio context
+    document.addEventListener('touchstart', function initAudio() {
+        backgroundMusic.play().catch(error => {
+            console.log('Initial mobile audio setup failed:', error);
+        });
+        document.removeEventListener('touchstart', initAudio);
+    }, { once: true });
 }
 
 // Call this when the page loads
