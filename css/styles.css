@@ -213,13 +213,14 @@ footer a:hover {
         display: none;
     }
 
-    /* Adjust canvas size */
-    #gameCanvas {
-        width: 90vw;  /* Make canvas wider on mobile */
-        height: 90vw;  /* Keep it square */
+    /* Adjust body for mobile */
+    body {
+        padding: 0;
+        height: auto;
+        overflow-y: auto;
     }
 
-    /* Adjust title */
+    /* Title stays fixed */
     .game-title {
         position: fixed;
         top: 0;
@@ -233,7 +234,7 @@ footer a:hover {
         z-index: 3;
     }
 
-    /* Position mobile header content */
+    /* Mobile header content stays fixed */
     .mobile-header-content {
         position: fixed;
         top: 5.5rem;
@@ -250,25 +251,21 @@ footer a:hover {
         font-size: 1.2rem;
     }
 
-    /* Score positioning for mobile */
+    /* Score should not be fixed */
     #score {
-        position: fixed;
-        top: 8.5rem;
-        left: 0;
-        width: 100%;
-        background: #000;
-        padding: 1rem 0;
-        margin: 0;
+        position: relative;
+        margin-top: 9rem;  /* Space for fixed elements above */
+        margin-bottom: 1rem;
         font-size: 2rem;
         font-weight: 700;
         text-align: center;
-        z-index: 3;
-        display: block !important;  /* Force display */
+        width: 100%;
+        background: transparent;
     }
 
-    /* Canvas positioning */
+    /* Canvas follows normal flow */
     #gameCanvas {
-        margin-top: 12rem;  /* Adjust based on header height */
+        margin-top: 1rem;
         width: 90vw;
         height: 90vw;
     }
