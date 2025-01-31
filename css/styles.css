@@ -208,179 +208,112 @@ footer a:hover {
     height: 40px;  /* Adjust size as needed */
 }
 
-/* Only show mobile controls on touch devices/small screens */
-@media (max-width: 768px), (pointer: coarse) {
-    /* Show mobile controls */
-    .mobile-controls {
-        display: block;
-    }
-    
-    /* Hide keyboard instructions */
-    #controls {
-        display: none;
-    }
+/* Hide mobile elements by default */
+.mobile-controls, .mobile-header-content {
+    display: none;
+}
 
-    /* Adjust body for mobile */
+/* Single mobile media query */
+@media (max-width: 768px), (pointer: coarse) {
     body {
+        margin: 0;
         padding: 0;
         height: 100vh;
+        width: 100vw;
+        position: fixed;
         overflow: hidden;
-        position: fixed;  /* Force fixed positioning */
-        width: 100%;
     }
 
-    /* Mobile container */
     .mobile-container {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0;
-        overflow: hidden;
     }
 
-    /* Title stays fixed but smaller */
     .game-title {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         background: #000;
-        margin: 0;
-        padding: 0.3rem 0;
-        font-size: 1.8rem;
-        z-index: 3;
-    }
-
-    /* Mobile header content */
-    .mobile-header-content {
-        position: fixed;
-        top: 2.8rem;
-        width: 100%;
-        padding: 0.2rem 0;
-        font-size: 0.9rem;
-        z-index: 3;
-    }
-
-    /* Score positioning */
-    #score {
-        position: fixed;
-        top: 4.2rem;
-        width: 100%;
-        font-size: 1.3rem;
-        margin: 0;
-        z-index: 3;
-    }
-
-    /* Canvas positioning */
-    #gameCanvas {
-        position: fixed;
-        top: 6rem;
-        width: 80vw;  /* Slightly smaller to ensure everything fits */
-        height: 80vw;
-        margin: 0;
-    }
-
-    /* Controls positioning */
-    .mobile-controls {
-        position: fixed;
-        bottom: 1rem;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    /* Touch controls */
-    .touch-controls {
-        margin: 0;
-        gap: 8px;
-    }
-
-    .middle-row {
-        gap: 80px;
-    }
-
-    .touch-button {
-        width: 70px;
-        height: 70px;
-    }
-
-    .arrow-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    /* Sound controls */
-    .sound-controls {
-        position: fixed;
-        bottom: 0.5rem;
-        right: 1rem;
-        margin: 0;
-        scale: 0.8;
-    }
-}
-
-/* Hide mobile header by default */
-.mobile-header-content {
-    display: none;
-}
-
-@media (max-width: 768px), (pointer: coarse) {
-    /* Show mobile header content */
-    .mobile-header-content {
-        position: fixed;
-        top: 5.5rem;
-        left: 0;
-        width: 100%;
-        background: #000;
         padding: 0.5rem 0;
+        font-size: 2rem;
         text-align: center;
         z-index: 3;
+    }
+
+    .mobile-header-content {
         display: flex;
+        position: fixed;
+        top: 3.5rem;
+        width: 100%;
         justify-content: center;
         align-items: center;
         gap: 12px;
-        font-size: 1.2rem;
-        color: #fff;  /* Match footer text color */
+        font-size: 1rem;
+        z-index: 3;
     }
 
-    .mobile-header-content a {
-        color: #ff0000;  /* Red color like footer */
-        text-decoration: none;
-        transition: color 0.2s ease;
+    #score {
+        position: fixed;
+        top: 5rem;
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        z-index: 3;
     }
 
-    .mobile-header-content a:hover {
-        color: #cc0000;  /* Darker red on hover like footer */
+    #gameCanvas {
+        position: fixed;
+        top: 7rem;
+        width: 90vw;
+        height: 90vw;
     }
 
-    .mobile-header-content .x-icon {
-        display: inline-flex;
+    .mobile-controls {
+        display: block;
+        position: fixed;
+        bottom: 1rem;
+        left: 0;
+        width: 100%;
+    }
+
+    .touch-controls {
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
 
-    .mobile-header-content .x-icon img {
-        width: 28px;  /* Match mobile footer icon size */
-        height: 28px;
-        transition: transform 0.2s ease;
+    .middle-row {
+        display: flex;
+        gap: 100px;
     }
 
-    .mobile-header-content .x-icon:hover img {
-        transform: scale(1.2);
+    .touch-button {
+        width: 80px;
+        height: 80px;
     }
 
-    .mobile-header-content .x-icon:active img {
-        transform: scale(0.9);
+    .arrow-icon {
+        width: 45px;
+        height: 45px;
     }
 
-    /* Hide regular footer on mobile */
-    footer {
+    .sound-controls {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 4;
+    }
+
+    /* Hide desktop elements */
+    #controls, footer {
         display: none;
     }
-
-    /* Rest of your mobile styles... */
 }
