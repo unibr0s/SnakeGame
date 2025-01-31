@@ -324,13 +324,22 @@ let isSoundMuted = false;
 // Single toggle button listener
 document.getElementById('toggleSound').addEventListener('click', () => {
     isSoundMuted = !isSoundMuted;
+    
+    // Update all audio elements
     backgroundMusic.muted = isSoundMuted;
     eatSound.muted = isSoundMuted;
     gameOverSound.muted = isSoundMuted;
     
     // Update icon based on mute state
     const volumeIcon = document.querySelector('.volume-icon');
-    volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
+    if (volumeIcon) {  // Check if element exists
+        try {
+            volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
+        } catch (error) {
+            console.error('Error updating volume icon:', error);
+        }
+    }
+    
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
 });
 
