@@ -241,27 +241,36 @@ footer a:hover {
         width: 100%;
         background: #000;
         padding: 0.5rem 0;
+        text-align: center;
         z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.2rem;
     }
 
-    /* Move score below mobile header content */
+    /* Score positioning for mobile */
     #score {
         position: fixed;
-        top: 8rem;  /* Adjusted to be below mobile header */
+        top: 8.5rem;
         left: 0;
         width: 100%;
         background: #000;
-        padding: 0.5rem 0;
+        padding: 1rem 0;
         margin: 0;
         font-size: 2rem;
-        letter-spacing: 2px;
+        font-weight: 700;
         text-align: center;
         z-index: 3;
+        display: block !important;  /* Force display */
     }
 
-    /* Adjust canvas position to be below score */
+    /* Canvas positioning */
     #gameCanvas {
-        margin-top: 11rem;  /* Increased to account for fixed header elements */
+        margin-top: 12rem;  /* Adjust based on header height */
+        width: 90vw;
+        height: 90vw;
     }
 
     /* Adjust sound controls for mobile */
