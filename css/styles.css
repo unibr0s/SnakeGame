@@ -213,7 +213,7 @@ footer a:hover {
     display: none;
 }
 
-/* Keep only ONE mobile media query with all mobile styles */
+/* Single mobile media query with all mobile styles */
 @media (max-width: 768px), (pointer: coarse) {
     body {
         margin: 0;
@@ -226,7 +226,7 @@ footer a:hover {
 
     .game-title {
         position: fixed;
-        top: 1.5rem;  /* More space from top */
+        top: 1.5rem;
         left: 0;
         width: 100%;
         background: #000;
@@ -274,14 +274,18 @@ footer a:hover {
         top: 9rem;
         width: 85vw;
         height: 85vw;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
+    /* Mobile Controls */
     .mobile-controls {
         display: block;
         position: fixed;
         bottom: 2rem;
         left: 0;
         width: 100%;
+        z-index: 2;
     }
 
     .touch-controls {
@@ -299,6 +303,32 @@ footer a:hover {
     .touch-button {
         width: 110px;
         height: 110px;
+        border: 2px solid #ff0000;
+        border-radius: 50%;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        padding: 0;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6),
+                    0 0 40px rgba(255, 0, 0, 0.4),
+                    0 0 60px rgba(255, 0, 0, 0.2);
+        position: relative;
+        z-index: 2;
+        transition: all 0.1s ease;
+        touch-action: manipulation;
+    }
+
+    .touch-button:active,
+    .touch-button:focus,
+    .touch-button.pressed {
+        background: #1a0000;
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.8),
+                    0 0 50px rgba(255, 0, 0, 0.4);
+        transform: scale(0.9);
+        outline: none;
     }
 
     .arrow-icon {
@@ -306,12 +336,23 @@ footer a:hover {
         height: 65px;
     }
 
+    /* Sound controls */
     .sound-controls {
         position: fixed;
         bottom: 2.5rem;
         right: 2rem;
         z-index: 4;
-        scale: 1.3;
+        scale: 1.5;
+    }
+
+    .sound-controls button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .volume-icon {
+        width: 25px;
+        height: 25px;
     }
 
     /* Hide desktop elements */
