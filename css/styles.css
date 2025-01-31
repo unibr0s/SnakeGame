@@ -26,9 +26,10 @@ body {
 }
 
 #score {
-    font-size: 1rem;  /* Slightly smaller */
+    font-size: 1rem;
     margin-bottom: 0.2rem;
     font-weight: 700;
+    text-align: center;
     position: relative;
     z-index: 2;
 }
@@ -37,6 +38,7 @@ body {
     margin-top: 0.3rem;
     font-size: 0.8rem;
     font-weight: 400;
+    text-align: center;
     position: relative;
     z-index: 2;
 }
@@ -45,7 +47,10 @@ body {
     margin-top: 0.3rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.2rem;
+    position: relative;
+    z-index: 2;
 }
 
 .sound-controls div {
@@ -132,10 +137,11 @@ footer a:hover {
 }
 
 .game-title {
-    font-size: 1.5rem;  /* Smaller title */
+    font-size: 1.5rem;
     font-weight: 700;
-    margin: 0 0 0.3rem 0;  /* Reduced margins */
+    margin: 0 0 0.3rem 0;
     letter-spacing: 2px;
+    text-align: center;
 }
 
 /* Mobile touch controls - hidden by default */
