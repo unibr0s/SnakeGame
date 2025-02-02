@@ -63,20 +63,18 @@ gameOverSound.volume = 0.25;    // Adjust this value (0.0 to 1.0)
 
 // Start background music when game starts
 function startGame() {
-    // Try to play music but handle the promise rejection
     backgroundMusic.play().catch(error => {
         console.log('Autoplay prevented. Press any movement key to start music.');
-        // Add keydown handler to start music on first key press
         function startMusicOnKey(e) {
             if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 
                  'a', 'A', 'w', 'W', 's', 'S', 'd', 'D'].includes(e.key)) {
                 backgroundMusic.play();
-                // Remove the key handler after first use
                 document.removeEventListener('keydown', startMusicOnKey);
             }
         }
         document.addEventListener('keydown', startMusicOnKey);
     });
+    gtag('event', 'game_start');
 }
 
 // Add mobile-specific audio handling
@@ -256,6 +254,9 @@ function checkCollision() {
             backgroundMusic.pause();
             backgroundMusic.currentTime = 0;
             gameOverSound.play();
+            gtag('event', 'game_over', {
+                'score': score
+            });
             alert(`Game Over! Your score is ${score}`);
             resetGame();
             break;
@@ -335,10 +336,13 @@ document.getElementById('toggleSound').addEventListener('click', () => {
     eatSound.muted = isSoundMuted;
     gameOverSound.muted = isSoundMuted;
     
-    // Update icon based on mute state
     const volumeIcon = document.querySelector('.volume-icon');
     volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
+    
+    gtag('event', 'sound_toggle', {
+        'state': isSoundMuted ? 'off' : 'on'
+    });
 });
 
 // Add this to your existing JavaScript
