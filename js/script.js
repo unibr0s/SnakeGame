@@ -77,6 +77,7 @@ function startGame() {
         }
         document.addEventListener('keydown', startMusicOnKey);
     });
+    gtag('event', 'game_start');
 }
 
 // Add mobile-specific audio handling
@@ -339,6 +340,9 @@ document.getElementById('toggleSound').addEventListener('click', () => {
     const volumeIcon = document.querySelector('.volume-icon');
     volumeIcon.src = isSoundMuted ? 'assets/Icons/volume-off.png' : 'assets/Icons/volume-on.png';
     document.getElementById('toggleSound').classList.toggle('muted', isSoundMuted);
+    gtag('event', 'sound_toggle', {
+        'state': isSoundMuted ? 'off' : 'on'
+    });
 });
 
 // Add this to your existing JavaScript
@@ -412,3 +416,11 @@ backgroundImg.onload = function() {
 backgroundImg.onerror = function() {
     console.log('Failed to load background image:', backgroundImg.src);
 };
+
+// Track game over with score
+function gameOver() {
+    // ... existing game over code ...
+    gtag('event', 'game_over', {
+        'score': score
+    });
+}
